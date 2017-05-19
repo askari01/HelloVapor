@@ -4,10 +4,12 @@ import HTTP
 final class WeatherController {
     
     func addRoutes(drop: Droplet) {
-        drop.get("sunny", handler: sunny)
-        drop.get("weather", handler: weatherCloudy)
-        drop.get("weather", String.self, handler: argument)
-        drop.post("post", handler: post)
+            drop.group("weather") { group in
+                group.get("sunny", handler: sunny)
+                group.get(handler: weatherCloudy)
+                group.get(String.self, handler: argument)
+                group.post("post", handler: post)
+        }
     }
     
     func sunny(request: Request) throws -> ResponseRepresentable {
